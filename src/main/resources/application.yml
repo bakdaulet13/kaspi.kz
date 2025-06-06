@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: kaspi.kz
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/kaspi.kz
+    username: kaspi.kz
+    password: kaspi.kz
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: cto
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+        spring.json.value.default.type: kaspi.kz.dto.RepairOrderUpdateDto
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
