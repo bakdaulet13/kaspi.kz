@@ -97,7 +97,7 @@ public class RepairOrderServiceImp implements RepairOrderService {
 
         if(repairOrderUpdateDto.status().equals(RepairOrderStatus.FINISHED)) {
             //you can use websocket or firebase for notification users
-            logger.info("Order finished!");
+            logger.info("Your request No{} has been completed. Thank you for contacting us!", repairOrder.getId());
         }
     }
 
