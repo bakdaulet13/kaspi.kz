@@ -28,7 +28,7 @@ git clone
 
 ### 2. Соберите проект
 
-mvn clean install
+mvn clean install -DskipTests
 
 ### 3. Запустите с помощью Docker Compose
 
