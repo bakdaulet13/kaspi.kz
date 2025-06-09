@@ -10,7 +10,6 @@ import kaspi.kz.model.StatusHistory;
 import kaspi.kz.model.enums.RepairOrderStatus;
 import kaspi.kz.repository.RepairOrderRepository;
 import kaspi.kz.service.RepairOrderService;
-import kaspi.kz.service.StatusHistoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ public class RepairOrderServiceImp implements RepairOrderService {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
     private final RepairOrderRepository repairOrderRepository;
-    private final StatusHistoryService statusHistoryService;
     private final StatusProducer statusProducer;
 
     private static final Map<RepairOrderStatus, RepairOrderStatus> allowedTransitions = Map.of(
@@ -38,9 +36,8 @@ public class RepairOrderServiceImp implements RepairOrderService {
     );
 
     @Autowired
-    public RepairOrderServiceImp(RepairOrderRepository repairOrderRepository, StatusHistoryService statusHistoryService, StatusProducer statusProducer) {
+    public RepairOrderServiceImp(RepairOrderRepository repairOrderRepository, StatusProducer statusProducer) {
         this.repairOrderRepository = repairOrderRepository;
-        this.statusHistoryService = statusHistoryService;
         this.statusProducer = statusProducer;
     }
 
@@ -96,7 +93,6 @@ public class RepairOrderServiceImp implements RepairOrderService {
         statusHistory.setRepairOrder(repairOrder);
         repairOrder.addHistory(statusHistory);
 
-        statusHistoryService.save(statusHistory);
         repairOrderRepository.save(repairOrder);
 
         if(repairOrderUpdateDto.status().equals(RepairOrderStatus.FINISHED)) {
