@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Date;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional(readOnly = true)
 public class RepairOrderServiceImp implements RepairOrderService {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -43,6 +45,7 @@ public class RepairOrderServiceImp implements RepairOrderService {
     }
 
     @Override
+    @Transactional
     public void create(RepairOrderCreateDto repairOrderCreateDto) {
         RepairOrder repairOrder = new RepairOrder();
         repairOrder.setUsername(repairOrderCreateDto.clientName());
@@ -67,6 +70,7 @@ public class RepairOrderServiceImp implements RepairOrderService {
     }
 
     @Override
+    @Transactional
     public void update(RepairOrderUpdateDto repairOrderUpdateDto) {
         RepairOrder repairOrder = repairOrderRepository.findById(repairOrderUpdateDto.id())
                 .orElseThrow(() -> new IllegalArgumentException("RepairOrder with id " + repairOrderUpdateDto.id() + " not found"));

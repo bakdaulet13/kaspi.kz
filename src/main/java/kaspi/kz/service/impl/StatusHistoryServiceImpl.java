@@ -5,6 +5,7 @@ import kaspi.kz.repository.StatusHistoryRepository;
 import kaspi.kz.service.StatusHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StatusHistoryServiceImpl implements StatusHistoryService {
@@ -15,6 +16,7 @@ public class StatusHistoryServiceImpl implements StatusHistoryService {
         this.statusHistoryRepository = statusHistoryRepository;
     }
 
+    @Transactional
     @Override
     public void save(StatusHistory statusHistory) {
         statusHistoryRepository.save(statusHistory);
